@@ -12,7 +12,7 @@ jobs:
     name: Typeset article
     runs-on: ubuntu-latest
     container:
-      image: texlive/texlive:TL2025-historic
+      image: texlive/texlive:latest
     permissions:
       contents: write
     steps:
