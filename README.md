@@ -1,7 +1,8 @@
-# Recording the Czech premiere of the _Fantasia Apocalyptica_ multimedia work
+# From footage to film: Recording and editing the Czech premiere of _Fantasia Apocalyptica_
 
-This repo contains the source code of the article *Recording the Czech premiere
-of the _Fantasia Apocalyptica_ multimedia work* to be published in TUGboat 47(1).
+This repo contains the source code of the article *From footage to film:
+Recording and editing the Czech premiere of _Fantasia Apocalyptica_*,
+to appear in _TUGboat_ 47(1).
 
 You can typeset the article by running the following commands:
 
