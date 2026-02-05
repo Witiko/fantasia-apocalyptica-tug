@@ -1,0 +1,67 @@
+\documentclass[final]{ltugboat}
+\usepackage[T1]{fontenc} % tt \_
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[hidelinks,pdfa]{hyperref}
+\usepackage{minted}
+\setminted{breaklines}
+\usemintedstyle{bw}
+\def\slash{\discretionary{/}{/}{/}}
+\def\hyphen{\discretionary{-}{-}{-}}
+\def\url{\tbsurl}
+
+%%% Start of metadata %%%
+\title{Recording the Czech premiere of the \emph{Fantasia Apocalyptica} multimedia work}
+
+% repeat info for each author; comment out items that don't apply.
+\author{V\'{i}t Star\'{y} Novotn\'{y}}
+\address{Studen\'{a} 453/15 \\ Brno 63800, Czech Republic}
+\netaddress{witiko (at) mail dot muni dot cz}
+\personalURL{github.com/witiko}
+
+%%% End of metadata %%%
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+On October 11, 2019, the Czech premiere of the multimedia work \emph{Fantasia Apocalyptica} took place at Masaryk University, marking the 25th anniversary of its Faculty of Informatics and featuring the composer and author Donald Knuth. The performance was recorded and later \href{https://youtu.be/wk7dEKMPP68}{published on the faculty's YouTube channel}.
+
+In this article, written on the occasion of Knuth's 88th birthday, I describe the complete preparation of the recording, from processing the raw audio and video footage through recreating the projection panels that accompanied the performance to assembling the final master. With the exception of super-resolution enhancement, introductory and closing edits, and audio compression, the workflow relies exclusively on free and open-source tools, including \TeX, Audacity, Aegisub, FFmpeg, \acro{MLT}, \acro{PDF}tk, and ImageMagick. The article explains how these tools can be combined into a practical, reproducible workflow that readers may apply to their own recordings.
+\end{abstract}
+
+\section*{Introduction}
+% TODO: Cite the following articles about Knuth's 2019 visit:
+% - https://www.ntg.nl/maps/51/08.pdf
+% - https://dml.cz/handle/10338.dmlcz/150161
+% - https://dml.cz/handle/10338.dmlcz/150259
+% - https://dml.cz/handle/10338.dmlcz/150273
+% - https://dml.cz/handle/10338.dmlcz/152647
+
+\section{Audiovisual acquisition and processing}
+\subsection{Video acquisition}
+\subsection{Video processing}
+\subsection{Audio acquisition}
+\subsection{Audio processing}
+
+\section{Opening speech and closing segment}
+\subsection{Editing of opening and closing segments}
+\subsection{Opening speech subtitles}
+
+\section{Panels accompanying the organ oratorio}
+\subsection{Trilingual text of Revelation}
+\subsection{Illustrations by Duane Bibby}
+\subsection{Text and illustration animation}
+\subsection{Organ sheet music}
+
+\section{Final video assembly}
+
+\SetBibJustification{\raggedright \advance\itemsep by 2pt plus1pt minus1pt}
+\bibliographystyle{tugboat}
+\begingroup
+\gappto{\UrlBreaks}{\UrlOrds}
+\bibliography{tb145starynovotny-fantasia}
+\endgroup
+
+\makesignature
+\end{document}

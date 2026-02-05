@@ -1,0 +1,45 @@
+name: Typeset article
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+env:
+  DEBIAN_FRONTEND: noninteractive
+jobs:
+  typeset-paper:
+    name: Typeset article
+    runs-on: ubuntu-latest
+    container:
+      image: texlive/texlive:TL2025-historic
+    permissions:
+      contents: write
+    steps:
+      - name: Install additional packages
+        run: |
+          set -ex
+          apt -qy update
+          apt -qy install --no-install-recommends zip
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Typeset article
+        run: latexmk tb145starynovotny-fantasia.ltx
+      - name: Archive sources
+        run: zip -@ tb145starynovotny-fantasia < MANIFEST
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tb145starynovotny-fantasia
+          path: tb145starynovotny-fantasia.zip
+      - name: Create a prerelease
+        if: github.ref == 'refs/heads/main'
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          title: The latest version
+          automatic_release_tag: latest
+          prerelease: true
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          files: |
+            tb145starynovotny-fantasia.pdf
+            tb145starynovotny-fantasia.zip
