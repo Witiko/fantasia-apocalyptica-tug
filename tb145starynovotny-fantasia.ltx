@@ -15,9 +15,14 @@
 
 % repeat info for each author; comment out items that don't apply.
 \author{V\'{i}t Star\'{y} Novotn\'{y}}
-\address{Studen\'{a} 453/15 \\ Brno 63800, Czech Republic}
+\address{Studen\'{a} 453/15 \\ Brno 638 00, Czech Republic}
 \netaddress{witiko (at) mail dot muni dot cz}
 \personalURL{github.com/witiko}
+
+\author{Petr Sojka}
+\address{Faculty of Informatics \\ Masaryk University \\ Botanick\'{a} 68a \\ Brno 602 00, Czech Republic}
+\netaddress{sojka (at) fi dot muni dot cz}
+\ORCID{0000-0002-5768-4007}
 
 %%% End of metadata %%%
 
@@ -25,36 +30,50 @@
 \maketitle
 
 \begin{abstract}
-On October 11, 2019, the Czech premiere of the multimedia work \emph{Fantasia Apocalyptica} took place at Masaryk University, marking the 25th anniversary of its Faculty of Informatics and featuring the composer and author Donald Knuth. The performance was recorded and later \href{https://youtu.be/wk7dEKMPP68}{published on the faculty's YouTube channel}.
+On October 11, 2019, the Czech premiere of the multimedia work \emph{Fantasia Apocalyptica} took place at Masaryk University, marking the 25th anniversary of its Faculty of Informatics (\acro{FI~MU}) and featuring the composer and author Donald Knuth. The performance was recorded and later \href{https://youtu.be/wk7dEKMPP68}{published on the faculty's YouTube channel}.
 
-In this article, written on the occasion of Knuth's 88th birthday, I describe the complete preparation of the recording, from processing the raw audio and video footage through recreating the projection panels that accompanied the performance to assembling the final master. With the exception of super-resolution enhancement, introductory and closing edits, and audio compression, the workflow relies exclusively on free and open-source tools, including \TeX, Audacity, Aegisub, FFmpeg, \acro{MLT}, \acro{PDF}tk, and ImageMagick. The article explains how these tools can be combined into a practical, reproducible workflow that readers may apply to their own recordings.
+In this article, written on the occasion of Knuth's 88th birthday, we describe the complete preparation of the recording, from processing the raw audio and video footage through recreating the projection panels that accompanied the performance to assembling the final master. With the exception of super-resolution enhancement, introductory and closing edits, and audio compression, the workflow relies exclusively on free and open-source tools, including \TeX, Audacity, Aegisub, FFmpeg, \acro{MLT}, \acro{PDF}tk, and ImageMagick. The article explains how these tools can be combined into a practical, reproducible workflow that readers may apply to their own recordings.
 \end{abstract}
 
-\section*{Introduction}
-% TODO: Cite the following articles about Knuth's 2019 visit:
-% - https://www.ntg.nl/maps/51/08.pdf
-% - https://dml.cz/handle/10338.dmlcz/150161
-% - https://dml.cz/handle/10338.dmlcz/150259
-% - https://dml.cz/handle/10338.dmlcz/150273
-% - https://dml.cz/handle/10338.dmlcz/152647
+\makeatletter
+\def\@thefnmark{}\@footnotetext{This article is an expanded translation of an earlier article published in \emph{Zpravodaj}~\cite{starynovotny2024priprava}, the journal of the Czech and Slovak \TeX{} Users Group (\CSTUG).\par For further information about Knuth's visit to Brno, see also articles transcribing his public lectures~\cite{szaniszlo2020dva, szaniszlo2021two} and describing the accompanying multimedia performance~\cite{luptak2019fantasia}.}
+\makeatother
+
+\section{Introduction}
+
+% TODO: Petr's introduction
+
+The rest of the article is organized as follows:
+First, in Section~\ref{sec:acquisition}, we describe the acquisition and processing of the raw audiovisual data. Next, in Section~\ref{sec:opening-speech-and-closing-segment}, we describe the preparation of the video recording of the opening speech and the closing segment of the performance. Then, in Section~\ref{sec:panels}, we describe the preparation of the panels accompanying the performance. Finally, in Section~\ref{sec:final-video-assembly}, we describe how the individual parts were combined into the final recording. In Section~\ref{sec:conclusion}, we describe the screening of the finished video recording at \acro{FI~MU} on December~18, 2019.
+\looseness=-1
 
 \section{Audiovisual acquisition and processing}
+\label{sec:acquisition}
+The video and audio of the performance were acquired and preprocessed by Pavel \v{S}iler, Petr Holub\'{a}\v{r}, and students of the \acro{LEMMA} laboratory.~\cite{lemma} We standardized the video format and mixed ambient sound and Ji\v{r}\'{i} Zlatu\v{s}ka's opening speech into the audio.
+\looseness=-1
+
 \subsection{Video acquisition}
 \subsection{Video processing}
 \subsection{Audio acquisition}
 \subsection{Audio processing}
 
 \section{Opening speech and closing segment}
+\label{sec:opening-speech-and-closing-segment}
 \subsection{Editing opening and closing segments}
 \subsection{Opening speech subtitles}
 
 \section{Panels accompanying the organ oratorio}
+\label{sec:panels}
 \subsection{Trilingual text of Revelation}
 \subsection{Illustrations by Duane Bibby}
 \subsection{Text and illustration animation}
 \subsection{Organ sheet music}
 
 \section{Final video assembly}
+\label{sec:final-video-assembly}
+
+\section{Conclusion}
+\label{sec:conclusion}
 
 \SetBibJustification{\raggedright \advance\itemsep by 2pt plus1pt minus1pt}
 \bibliographystyle{tugboat}
@@ -62,6 +81,8 @@ In this article, written on the occasion of Knuth's 88th birthday, I describe th
 \gappto{\UrlBreaks}{\UrlOrds}
 \bibliography{tb145starynovotny-fantasia}
 \endgroup
+
+\vfill
 
 \makesignature
 \end{document}
