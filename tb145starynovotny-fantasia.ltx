@@ -2,6 +2,10 @@
 \usepackage[T1]{fontenc} % tt \_
 \usepackage{lmodern}
 \usepackage{microtype}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{decorations.pathreplacing}
 \usepackage[hidelinks,pdfa]{hyperref}
 \usepackage{minted}
 \setminted{breaklines}
@@ -56,16 +60,23 @@ The video and audio of the performance were acquired and preprocessed by Pavel \
 The video recording of the performance was made by Pavel \v{S}iler using a Sony~\acro{PXW-X70} camera. The footage includes Donald Knuth’s lectures at \acro{FI~MU}, as well as shots of the church and organ and the opening speech by Ji\v{r}\'{i} Zlatu\v{s}ka.
 
 \subsection{Video processing}
-Although the video was delivered in a resolution of $1920\times1080$\,px at 25 frames per second, the final recording was expected to have at least twice the resolution (\acro{4K}) and frame rate (50~\acro{FPS}).
+Although the video was delivered in a resolution of $1920\times1080$\,px at 25 frames per second (\acro{FPS}), the final recording was expected to have at least twice the resolution (\acro{4K}) and frame rate (50~\acro{FPS}).
 
 The lecture recordings were provided in a non-interlaced format, whereas the footage of the church, organ, and opening speech was in an interlaced format. In addition, the lectures and opening speech were recorded from a tripod, in contrast to the handheld shots of the church and organ. The goal of the video processing was therefore not only to increase the resolution and frame rate, but also to unify the video format and stabilize the handheld footage.
 
 The video was processed using the free open-source tool \acro{FF}mpeg~\cite{ffmpeg} and the open-source tool waifu2x~\cite{waifu2x}; see figures~\ref{fig:ffmpeg-waifu2x}--\ref{fig:minterpolate-yadif}. First, we stabilized the handheld footage using the\texttt{vidstabdetect} and \texttt{vidstab\discretionary{\textrm{-}}{}{}transform} \acro{FF}mpeg filters and then we increased the resolution and frame rate as follows:\footnote{The increased resolution and, in particular, frame rate are only an illusion. The processed video therefore comprises only about seven minutes of the 104-minute recording. The remaining 97 minutes consist of animated panels rendered in native \acro{4K} resolution at 50~\acro{FPS}.}
 
 \begin{itemize}
-\item For non-interlaced video, we first increased the resolution using waifu2x. We then increased the frame rate using the \texttt{minterpolate} \acro{FF}mpeg filter, which interpolates missing frames from adjacent frames.
 \item For interlaced video, we first increased the frame rate using the \acro{FF}mpeg filter \texttt{yadif}, which interpolates missing half-frames (fields) from adjacent fields and lines. We then increased the resolution using waifu2x.
+\item For non-interlaced video, we first increased the resolution using waifu2x. We then increased the frame rate using the \texttt{minterpolate} \acro{FF}mpeg filter, which interpolates missing frames from adjacent frames.
 \end{itemize}
+
+\begin{figure*}
+\centering
+\input images/ffmpeg-waifu2x-activity-diagram
+\caption{Activity diagram of video processing using \acro{FF}mpeg and waifu2x.}
+\label{fig:ffmpeg-waifu2x}
+\end{figure*}
 
 \vfill
 
