@@ -32,7 +32,7 @@
 \begin{abstract}
 On October 11, 2019, the Czech premiere of the multimedia work \emph{Fantasia Apocalyptica} took place at Masaryk University, marking the 25th anniversary of its Faculty of Informatics (\acro{FI~MU}) and featuring the composer and author Donald Knuth. The performance was recorded and later \href{https://youtu.be/wk7dEKMPP68}{published on the faculty's YouTube channel}.
 
-In this article, written on the occasion of Knuth's 88th birthday, we describe the complete preparation of the recording, from processing the raw audio and video footage through recreating the projection panels that accompanied the performance to assembling the final master. With the exception of super-resolution enhancement, introductory and closing edits, and audio compression, the workflow relies exclusively on free and open-source tools, including \TeX, Audacity, Aegisub, FFmpeg, \acro{MLT}, \acro{PDF}tk, and ImageMagick. The article explains how these tools can be combined into a practical, reproducible workflow that readers may apply to their own recordings.
+In this article, written on the occasion of Knuth's 88th birthday, we describe the complete preparation of the recording, from processing the raw audio and video footage through recreating the projection panels that accompanied the performance to assembling the final master. With the exception of super-resolution enhancement, introductory and closing edits, and audio compression, the workflow relies exclusively on free and open-source tools, including \TeX, Audacity, Aegisub, \acro{FF}mpeg, \acro{MLT}, \acro{PDF}tk, and ImageMagick. The article explains how these tools can be combined into a practical, reproducible workflow that readers may apply to their own recordings.
 \end{abstract}
 
 \makeatletter
@@ -53,7 +53,22 @@ The video and audio of the performance were acquired and preprocessed by Pavel \
 \looseness=-1
 
 \subsection{Video acquisition}
+The video recording of the performance was made by Pavel \v{S}iler using a Sony~\acro{PXW-X70} camera. The footage includes Donald Knuth’s lectures at \acro{FI~MU}, as well as shots of the church and organ and the opening speech by Ji\v{r}\'{i} Zlatu\v{s}ka.
+
 \subsection{Video processing}
+Although the video was delivered in a resolution of $1920\times1080$\,px at 25 frames per second, the final recording was expected to have at least twice the resolution (\acro{4K}) and frame rate (50~\acro{FPS}).
+
+The lecture recordings were provided in a non-interlaced format, whereas the footage of the church, organ, and opening speech was in an interlaced format. In addition, the lectures and opening speech were recorded from a tripod, in contrast to the handheld shots of the church and organ. The goal of the video processing was therefore not only to increase the resolution and frame rate, but also to unify the video format and stabilize the handheld footage.
+
+The video was processed using the free open-source tool \acro{FF}mpeg~\cite{ffmpeg} and the open-source tool waifu2x~\cite{waifu2x}; see figures~\ref{fig:ffmpeg-waifu2x}--\ref{fig:minterpolate-yadif}. First, we stabilized the handheld footage using the\texttt{vidstabdetect} and \texttt{vidstab\discretionary{\textrm{-}}{}{}transform} \acro{FF}mpeg filters and then we increased the resolution and frame rate as follows:\footnote{The increased resolution and, in particular, frame rate are only an illusion. The processed video therefore comprises only about seven minutes of the 104-minute recording. The remaining 97 minutes consist of animated panels rendered in native \acro{4K} resolution at 50~\acro{FPS}.}
+
+\begin{itemize}
+\item For non-interlaced video, we first increased the resolution using waifu2x. We then increased the frame rate using the \texttt{minterpolate} \acro{FF}mpeg filter, which interpolates missing frames from adjacent frames.
+\item For interlaced video, we first increased the frame rate using the \acro{FF}mpeg filter \texttt{yadif}, which interpolates missing half-frames (fields) from adjacent fields and lines. We then increased the resolution using waifu2x.
+\end{itemize}
+
+\vfill
+
 \subsection{Audio acquisition}
 \subsection{Audio processing}
 
