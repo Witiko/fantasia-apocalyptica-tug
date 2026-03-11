@@ -1,7 +1,6 @@
 \documentclass[final]{ltugboat}
 \usepackage[T1]{fontenc} % tt \_
-\usepackage{lmodern}
-\usepackage{microtype}
+\usepackage{lmodern, microtype, subcaption}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{decorations.pathmorphing}
@@ -10,6 +9,16 @@
 \usepackage{minted}
 \setminted{breaklines}
 \usemintedstyle{bw}
+% \setminted{firstnumber=last, linenos}
+\newenvironment{mintedblock}{%
+  \let\textit\textsl
+  \par\vspace{\topsep}\vspace{\partopsep}%
+  \begingroup
+  \fvset{listparameters=\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}}%
+}{%
+  \endgroup
+  \par\vspace{\topsep}\vspace{\partopsep}%
+}
 \def\slash{\discretionary{/}{/}{/}}
 \def\hyphen{\discretionary{-}{-}{-}}
 \def\url{\tbsurl}
@@ -53,40 +62,68 @@ First, in Section~\ref{sec:acquisition}, we describe the acquisition and process
 
 \section{Audiovisual acquisition and processing}
 \label{sec:acquisition}
-The video and audio of the performance were acquired and preprocessed by Pavel \v{S}iler, Petr Holub\'{a}\v{r}, and students of the \acro{LEMMA} laboratory.~\cite{lemma} We standardized the video format and mixed ambient sound and Ji\v{r}\'{i} Zlatu\v{s}ka's opening speech into the audio.
-\looseness=-1
+The video and audio of the performance were acquired and preprocessed by Pavel \v{S}iler, Petr Holub\'{a}\v{r}, and students of the \acro{LEMMA} laboratory.~\cite{lemma} We normalized the video format and mixed ambient sound and Ji\v{r}\'{i} Zlatu\v{s}ka's opening speech into the audio.
 
 \subsection{Video acquisition}
-The video recording of the performance was made by Pavel \v{S}iler using a Sony~\acro{PXW-X70} camera. The footage includes Donald Knuth’s lectures at \acro{FI~MU}, as well as shots of the church and organ and the opening speech by Ji\v{r}\'{i} Zlatu\v{s}ka.
+The video recording of the performance was made by Pavel \v{S}iler using a Sony~\acro{PXW-X70} camera. The footage includes Donald Knuth's lectures at \acro{FI~MU}, as well as shots of the church and organ and the opening speech by Ji\v{r}\'{i} Zlatu\v{s}ka.
 
 \subsection{Video processing}
-Although the video was delivered in a resolution of $1920\times1080$\,px at 25 frames per second (\acro{FPS}), the final recording was expected to have at least twice the resolution (\acro{4K}) and frame rate (50~\acro{FPS}).
+Although the video was acquired in a resolution of $1920\times1080$\,px at 25 frames per second (\acro{FPS}), the final recording was expected to have at least twice the resolution (\acro{4K}) and frame rate (50~\acro{FPS}).
 
 The lecture recordings were provided in a non-interlaced format, whereas the footage of the church, organ, and opening speech was in an interlaced format. In addition, the lectures and opening speech were recorded from a tripod, in contrast to the handheld shots of the church and organ. The goal of the video processing was therefore not only to increase the resolution and frame rate, but also to unify the video format and stabilize the handheld footage.
 
-The video was processed using the free open-source tool \acro{FF}mpeg~\cite{ffmpeg} and the open-source tool waifu2x~\cite{waifu2x}; see figures~\ref{fig:ffmpeg-waifu2x}--\ref{fig:minterpolate-yadif}. First, we stabilized the handheld footage using the\texttt{vidstabdetect} and \texttt{vidstab\discretionary{\textrm{-}}{}{}transform} \acro{FF}mpeg filters and then we increased the resolution and frame rate as follows:\footnote{The increased resolution and, in particular, frame rate are only an illusion. The processed video therefore comprises only about seven minutes of the 104-minute recording. The remaining 97 minutes consist of animated panels rendered in native \acro{4K} resolution at 50~\acro{FPS}.}
-
-\begin{itemize}
-\item For interlaced video, we first increased the frame rate using the \acro{FF}mpeg filter \texttt{yadif}, which interpolates missing half-frames (fields) from adjacent fields and lines. We then increased the resolution using waifu2x.
-\item For non-interlaced video, we first increased the resolution using waifu2x. We then increased the frame rate using the \texttt{minterpolate} \acro{FF}mpeg filter, which interpolates missing frames from adjacent frames.
-\end{itemize}
-
-\begin{figure*}
+\begin{figure*}[t]
 \centering
 \input images/ffmpeg-waifu2x-activity-diagram
 \caption{Activity diagram of video processing using \acro{FF}mpeg and waifu2x.}
 \label{fig:ffmpeg-waifu2x}
 \end{figure*}
 
-\vfill
+\begin{figure*}[t]
+\input images/vidstabdetect-vidstabtransform
+\caption{Video stabilization using \acro{FF}mpeg filters.}
+\label{fig:vidstabdetect-vidstabtransform}
+\end{figure*}
+
+The video was processed using the free open-source tool \acro{FF}mpeg~\cite{ffmpeg} and the open-source tool waifu2x~\cite{waifu2x}; see Figures~\ref{fig:ffmpeg-waifu2x}--\ref{fig:minterpolate-yadif}. First, we stabilized the handheld footage using the \texttt{vidstabdetect} and \texttt{vidstab\discretionary{\textrm{-}}{}{}transform} \acro{FF}mpeg filters and then we increased the resolution and frame rate as follows:\footnote{The increased resolution and, in particular, frame rate are only an illusion. The processed video therefore comprises only about seven minutes of the 104-minute recording. The remaining 97 minutes consist of animated panels rendered in native \acro{4K} resolution at 50~\acro{FPS}.}
+
+\begin{itemize}
+\item For interlaced video, we first increased the frame rate using the \acro{FF}mpeg filter \texttt{yadif}, which interpolates missing half-frames (fields) from adjacent fields and lines. We then increased the resolution using waifu2x.
+\item For non-interlaced video, we first increased the resolution using waifu2x. We then increased the frame rate using the \texttt{minterpolate} \acro{FF}mpeg filter, which interpolates missing frames from adjacent frames.
+\end{itemize}
 
 \subsection{Audio acquisition}
+The audio of the performance was recorded using six microphones:
+\begin{itemize}
+    \item Two Zoom~\acro{H1} microphones were placed on the lectern and above the panels.
+    \item Two Oktava~\acro{MK012} microphones were connected to a Zoom~\acro{H4} recorder, placed in the choir loft, and aimed toward the church.
+    \item A Roland~\acro{R26} microphone and the Sony~\acro{PXW-X70} camera microphone were placed in the choir loft and aimed at the organ.
+\end{itemize}
+
+The audio was preprocessed by Petr Holub\'{a}\v{r}. The main input of their mix was the stereo recording from the Oktava~\acro{MK012} microphones. To add presence, Petr lightly mixed in the direct organ signal from the Roland~\acro{R26} microphone, applying frequency filtering to avoid undesirable phase shifts in the low-frequency range. To reduce the dynamic range, they used the digital \acro{VST} module \acro{SSL}~G-Master Buss Compressor from Waves Audio.
+
 \subsection{Audio processing}
+The audio was processed using the free open-source program Audacity; see Figure~\ref{fig:audacity}. The resulting mix includes the freely licensed sound of the bell of Constance Cathedral~\cite{edsward2016church}, the preprocessed audio of the performance from Petr Holub\'{a}\v{r}, and Ji\v{r}\'{i} Zlatu\v{s}ka's opening speech underscored by ambient sound from the Oktava~\acro{MK012} microphones.
 
 \section{Opening speech and closing segment}
 \label{sec:opening-speech-and-closing-segment}
+The video of the opening speech and closing was prepared together with \v{S}imon Ma\v{c}ejovsk\'{y}.
+
 \subsection{Editing opening and closing segments}
+The video recordings of the opening speech and closing were edited by \v{S}imon Ma\v{c}ejovsk\'{y} using Sony Vegas~15. The video includes footage from Donald Knuth’s lectures at \acro{FI~MU}, shots of the church and organ, Ji\v{r}\'{i} Zlatu\v{s}ka's opening speech, and photographs by Martina Mor\'{a}vkov\'{a}.
+
 \subsection{Opening speech subtitles}
+\begin{filecontents}[overwrite,nosearch,noheader]{example-ass.sh}
+$ ffmpeg -i input-video.mp4 \
+        -vf ass=input-subtitles.ass
+            video-and-subtitles.mp4
+\end{filecontents}
+Ji\v{r}\'{i} Zlatu\v{s}ka's opening speech was provided with subtitles in the \acro{ASS} format.\footnote{The FFmpeg filter \texttt{ass} can be used to burn subtitles into the video image:
+\begin{mintedblock}
+\inputminted{text}{example-ass.sh}
+\end{mintedblock}
+\noindent
+The \texttt{ass} filter is implemented by the \texttt{libass} software library, which by default does not use the kerning table of the selected font~\cite{enable-kerning-by-default}. To enable kerning, add the line \texttt{Kerning:} \texttt{yes} to the \texttt{[Script Info]} section of the \texttt{input-subtitles.ass} file.} The subtitles were prepared using the free tool Aegisub~\cite{aegisub}; see Figure~\ref{fig:aegisub}.
 
 \section{Panels accompanying the organ oratorio}
 \label{sec:panels}

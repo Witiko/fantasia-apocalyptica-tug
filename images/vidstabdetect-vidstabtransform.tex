@@ -1,0 +1,25 @@
+\begingroup
+\begin{subfigure}{\linewidth}
+\input images/camcorder-vidstabdetect-vidstabtransform
+\vspace{-4pt}
+\input images/frames/input-progressive-frames-shaky
+\vspace{-4pt}
+\caption{Při záznamu videa z ruky může vzniknout záznam s roztřeseným obrazem.}
+\end{subfigure}
+\par\vspace{8.5pt}%
+\setkeys{Gin}{width=28.74615pt,height=28.74615pt}%
+\begin{subfigure}{\linewidth}
+\begingroup
+\small
+\leavevmode\kern80pt
+\begin{BVerbatim}[commandchars=|\{\}]
+$ ffmpeg -i input-video.mp4 -vf vidstabdetect -f null -
+$ ffmpeg -i input-video.mp4 -vf vidstabtransform output-video.mp4|footnotemark{}
+\end{BVerbatim}
+\par\vspace{2.5pt}%
+\endgroup
+\input images/frames/output-vidstabtransform-frames
+\vspace{-4pt}
+\caption{The \texttt{vidstabdetect} and \texttt{vidstabtransform} filters isolate and remove rapid camera motion.}% The image is then zoomed so that the edges of the frame are not visible.}
+\end{subfigure}
+\endgroup
