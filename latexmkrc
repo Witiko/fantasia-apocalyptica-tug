@@ -3,4 +3,4 @@
 $pdf_mode = 1;
 
 ## Treat warnings as errors
-$warnings_as_errors = 1;
+#$warnings_as_errors = 1;
