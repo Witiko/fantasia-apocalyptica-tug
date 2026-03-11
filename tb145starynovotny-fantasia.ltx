@@ -49,7 +49,7 @@ In this article, written on the occasion of Knuth's 88th birthday, we describe t
 \end{abstract}
 
 \makeatletter
-\def\@thefnmark{}\@footnotetext{This article is an expanded translation of an earlier article published in \emph{Zpravodaj}~\cite{starynovotny2024priprava}, the journal of the Czech and Slovak \TeX{} Users Group (\CSTUG).\par For further information about Knuth's visit to Brno, see also articles transcribing his public lectures~\cite{szaniszlo2020dva, szaniszlo2021two} and describing the accompanying multimedia performance~\cite{luptak2019fantasia}.}
+\def\@thefnmark{}\@footnotetext{This article is an expanded translation of an earlier article published in \emph{Zpravodaj}~\cite{starynovotny2024priprava}, the journal of \CSTUG.\par For further information about Knuth's visit to Brno, see also articles transcribing his public lectures~\cite{szaniszlo2020dva, szaniszlo2021two} and describing the accompanying multimedia performance~\cite{luptak2019fantasia}.}
 \makeatother
 
 \section{Introduction}
@@ -72,20 +72,23 @@ Although the video was acquired in a resolution of $1920\times1080$\,px at 25 fr
 
 The lecture recordings were provided in a non-interlaced format, whereas the footage of the church, organ, and opening speech was in an interlaced format. In addition, the lectures and opening speech were recorded from a tripod, in contrast to the handheld shots of the church and organ. The goal of the video processing was therefore not only to increase the resolution and frame rate, but also to unify the video format and stabilize the handheld footage.
 
-\begin{figure*}[t]
+\begin{figure*}[h!]
 \centering
 \input images/ffmpeg-waifu2x-activity-diagram
 \caption{Activity diagram of video processing using \acro{FF}mpeg and waifu2x.}
 \label{fig:ffmpeg-waifu2x}
-\end{figure*}
-
-\begin{figure*}[t]
+\par
 \input images/vidstabdetect-vidstabtransform
 \caption{Video stabilization using \acro{FF}mpeg filters.}
+\par\medskip
 \label{fig:vidstabdetect-vidstabtransform}
+\input images/waifu2x.tex
+\caption{Increasing the video resolution using waifu2x.}
+\label{fig:waifu2x}
 \end{figure*}
 
-The video was processed using the free open-source tool \acro{FF}mpeg~\cite{ffmpeg} and the open-source tool waifu2x~\cite{waifu2x}; see Figures~\ref{fig:ffmpeg-waifu2x}--\ref{fig:minterpolate-yadif}. First, we stabilized the handheld footage using the \texttt{vidstabdetect} and \texttt{vidstab\discretionary{\textrm{-}}{}{}transform} \acro{FF}mpeg filters and then we increased the resolution and frame rate as follows:\footnote{The increased resolution and, in particular, frame rate are only an illusion. The processed video therefore comprises only about seven minutes of the 104-minute recording. The remaining 97 minutes consist of animated panels rendered in native \acro{4K} resolution at 50~\acro{FPS}.}
+The video was processed using the free open-source tool \acro{FF}mpeg\footnote{All \acro{FF}mpeg examples use the following output parameters for perceptually lossless compression: \texttt{-c:v libx265 -crf 17 -pix\_fmt yuv420p -c:a aac -b:a 384k -ar 44.1k}. They are omitted elsewhere for brevity.}~\cite{ffmpeg} and the open-source tool waifu2x~\cite{waifu2x}; see Figures~\ref{fig:ffmpeg-waifu2x}--\ref{fig:minterpolate-yadif}.
+First, we stabilized the handheld footage using the \texttt{vidstabdetect} and \texttt{vidstab\discretionary{\textrm{-}}{}{}transform} \acro{FF}mpeg filters and then we increased the resolution and frame rate as follows:\footnote{The increased resolution and frame rate are only an illusion, so we use them in only about seven minutes of the 104-minute recording. The remaining 97 minutes consist of animated panels rendered in native \acro{4K} resolution at 50~\acro{FPS}.}
 
 \begin{itemize}
 \item For interlaced video, we first increased the frame rate using the \acro{FF}mpeg filter \texttt{yadif}, which interpolates missing half-frames (fields) from adjacent fields and lines. We then increased the resolution using waifu2x.
@@ -124,6 +127,8 @@ Ji\v{r}\'{i} Zlatu\v{s}ka's opening speech was provided with subtitles in the \a
 \end{mintedblock}
 \noindent
 The \texttt{ass} filter is implemented by the \texttt{libass} software library, which by default does not use the kerning table of the selected font~\cite{enable-kerning-by-default}. To enable kerning, add the line \texttt{Kerning:} \texttt{yes} to the \texttt{[Script Info]} section of the \texttt{input-subtitles.ass} file.} The subtitles were prepared using the free tool Aegisub~\cite{aegisub}; see Figure~\ref{fig:aegisub}.
+
+\vfill
 
 \section{Panels accompanying the organ oratorio}
 \label{sec:panels}
