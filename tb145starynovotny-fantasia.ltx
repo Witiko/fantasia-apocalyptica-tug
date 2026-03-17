@@ -1,6 +1,6 @@
 \documentclass[final]{ltugboat}
 \usepackage[T1]{fontenc} % tt \_
-\usepackage{lmodern, microtype, subcaption}
+\usepackage{lmodern, microtype, subcaption, hologo}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{decorations.pathmorphing}
@@ -54,9 +54,17 @@ In this article, written on the occasion of Knuth's 88th birthday, we describe t
 
 \section{Introduction}
 
-% TODO: Petr's introduction
+The Czech premiere of Donald Knuth's multimedia organ oratorio, \emph{Fantasia Apocalyptica}, was a notable cultural and academic event connected with several historical and institutional milestones:
+\begin{description}
+\item[A Quarter Century:] The event formed the main part of the 25th-anniversary celebrations of \acro{FI MU}, see also \url{25.fi.muni.cz}.
+\item[Honoring a Pioneer:] Donald Knuth is the first honorary doctor of Masaryk University, a title awarded in 1996 on the initiative of \acro{FI MU}.
+\item[Institutional Context:] Organizing and recording the premiere reflects the faculty's long-standing association with Knuth's work and its influence on computer science and digital typography.
+\item[Typographical Context:] This connection is also reflected in the visual identity of \acro{FI MU}: its logo incorporates the ligature ``\acro{FI}'' and was created using Knuth's \hologo{METAFONT} system.~\cite[Figure~2]{Sojka:2017:TSJ}
+\item[The Work:] \emph{Fantasia Apocalyptica} is a composition based on the biblical \emph{Book of Revelation}. It combines musical structure with textual and visual elements, including symbolic imagery and notation, resulting in a multi-layered presentation.
+\end{description}
 
-The rest of the article is organized as follows:
+The rest of this article outlines the open-source workflow used to transform the raw footage into a high-resolution recording:
+
 First, in Section~\ref{sec:acquisition}, we describe the acquisition and processing of the raw audiovisual data. Next, in Section~\ref{sec:opening-speech-and-closing-segment}, we describe the preparation of the video recording of the opening speech and the closing segment of the performance. Then, in Section~\ref{sec:panels}, we describe the preparation of the panels accompanying the performance. Finally, in Section~\ref{sec:final-video-assembly}, we describe how the individual parts were combined into the final recording. In Section~\ref{sec:conclusion}, we describe the screening of the finished video recording at \acro{FI~MU} on December~18, 2019.
 \looseness=-1
 
@@ -147,7 +155,7 @@ The \texttt{ass} filter is implemented by the \texttt{libass} software library, 
 \bibliographystyle{tugboat}
 \begingroup
 \gappto{\UrlBreaks}{\UrlOrds}
-\bibliography{tb145starynovotny-fantasia}
+\bibliography{tb145starynovotny-fantasia, tugboat}
 \endgroup
 
 \vfill
