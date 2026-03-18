@@ -149,16 +149,15 @@ The video recordings of the opening speech and closing were edited by \v{S}imon 
 
 \subsection{Opening speech subtitles}
 \begin{filecontents}[overwrite,nosearch,noheader]{example-ass.sh}
-$ ffmpeg -i input-video.mp4 \
-        -vf ass=input-subtitles.ass
-            video-and-subtitles.mp4
+ $ ffmpeg -i input-video.mp4 -vf ass=subtitles.ass \
+                           video-and-subtitles.mp4
 \end{filecontents}
 Ji\v{r}\'{i} Zlatu\v{s}ka's opening speech was provided with subtitles in the \acro{ASS} format.\footnote{The FFmpeg filter \texttt{ass} can be used to burn subtitles into the video image:
 \begin{mintedblock}
 \inputminted{text}{example-ass.sh}
 \end{mintedblock}
 \noindent
-The \texttt{ass} filter is implemented by the \texttt{libass} software library, which by default does not use the kerning table of the selected font~\cite{enable-kerning-by-default}. To enable kerning, add the line \texttt{Kerning:} \texttt{yes} to the \texttt{[Script Info]} section of the \texttt{input-subtitles.ass} file.} The subtitles were prepared using the free tool Aegisub~\cite{aegisub}; see Figure~\ref{fig:aegisub}.
+The \texttt{ass} filter is implemented by the \texttt{libass} software library, which by default does not use the kerning table of the selected font~\cite{enable-kerning-by-default}. To enable kerning, add the line \texttt{Kerning:} \texttt{yes} to the \texttt{[Script Info]} section of the \texttt{subtitles.ass} file.} The subtitles were prepared using the free tool Aegisub~\cite{aegisub}; see Figure~\ref{fig:aegisub}.
 
 \section{Panels accompanying the organ oratorio}
 \label{sec:panels}
