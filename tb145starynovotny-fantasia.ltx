@@ -63,10 +63,7 @@ The Czech premiere of Donald Knuth's multimedia organ oratorio, \emph{Fantasia A
 \item[The Work:] \emph{Fantasia Apocalyptica} is a composition based on the biblical \emph{Book of Revelation}. It combines musical structure with textual and visual elements, including symbolic imagery and notation, resulting in a multi-layered presentation.
 \end{description}
 
-The rest of this article outlines the open-source workflow used to transform the raw footage into a high-resolution recording:
-
-First, in Section~\ref{sec:acquisition}, we describe the acquisition and processing of the raw audiovisual data. Next, in Section~\ref{sec:opening-speech-and-closing-segment}, we describe the preparation of the video recording of the opening speech and the closing segment of the performance. Then, in Section~\ref{sec:panels}, we describe the preparation of the panels accompanying the performance. Finally, in Section~\ref{sec:final-video-assembly}, we describe how the individual parts were combined into the final recording. In Section~\ref{sec:conclusion}, we describe the screening of the finished video recording at \acro{FI~MU} on December~18, 2019.
-\looseness=-1
+The rest of this article describes the open-source workflow used to turn the raw footage into a high-resolution recording. Section~\ref{sec:acquisition} covers the acquisition and processing of the raw audiovisual data. Section~\ref{sec:opening-speech-and-closing-segment} describes the preparation of the opening speech and closing segment. Section~\ref{sec:panels} covers the preparation of the panels accompanying the performance. Section~\ref{sec:final-video-assembly} explains how these parts were combined into the final recording. Finally, Section~\ref{sec:conclusion} describes the screening of the finished video at \acro{FI~MU} on December~18, 2019.
 
 \section{Audiovisual acquisition and processing}
 \label{sec:acquisition}
@@ -76,9 +73,10 @@ The video and audio of the performance were acquired and preprocessed by Pavel \
 The video recording of the performance was made by Pavel \v{S}iler using a Sony~\acro{PXW-X70} camera. The footage includes Donald Knuth's lectures at \acro{FI~MU}, as well as shots of the church and organ and the opening speech by Ji\v{r}\'{i} Zlatu\v{s}ka.
 
 \subsection{Video processing}
-Although the video was acquired in a resolution of $1920\times1080$\,px at 25 frames per second (\acro{FPS}), the final recording was expected to have at least twice the resolution (\acro{4K}) and frame rate (50~\acro{FPS}).
+Although the video was acquired in a resolution of $1920\times1080$\,px at 25 frames per second (\acro{FPS}), the final recording was expected to have at least twice the resolution (\acro{4K}) and framerate (50~\acro{FPS}).
 
-The lecture recordings were provided in a non-interlaced format, whereas the footage of the church, organ, and opening speech was in an interlaced format. In addition, the lectures and opening speech were recorded from a tripod, in contrast to the handheld shots of the church and organ. The goal of the video processing was therefore not only to increase the resolution and frame rate, but also to unify the video format and stabilize the handheld footage.
+The lecture recordings were provided in a non-interlaced (progressive) format, whereas the footage of the church, organ, and opening speech was in an interlaced format. In addition, the lectures and opening speech were recorded from a tripod, in contrast to the handheld shots of the church and organ. The goal of the video processing was therefore not only to increase the resolution and framerate, but also to unify the video format and stabilize the handheld footage.
+\looseness=-1
 
 \begin{figure*}[h!]
 \centering
@@ -95,12 +93,38 @@ The lecture recordings were provided in a non-interlaced format, whereas the foo
 \label{fig:waifu2x}
 \end{figure*}
 
+\begin{figure*}[h!]
+\input images/minterpolate-yadif
+\caption{Increasing the video framerate using \acro{FF}mpeg filters.}
+\label{fig:minterpolate-yadif}
+\end{figure*}
+
 The video was processed using the free open-source tool \acro{FF}mpeg\footnote{All \acro{FF}mpeg examples use the following output parameters for perceptually lossless compression: \texttt{-c:v libx265 -crf 17 -pix\_fmt yuv420p -c:a aac -b:a 384k -ar 44.1k}. They are omitted elsewhere for brevity.}~\cite{ffmpeg} and the open-source tool waifu2x~\cite{waifu2x}; see Figures~\ref{fig:ffmpeg-waifu2x}--\ref{fig:minterpolate-yadif}.
-First, we stabilized the handheld footage using the \texttt{vidstabdetect} and \texttt{vidstab\discretionary{\textrm{-}}{}{}transform} \acro{FF}mpeg filters and then we increased the resolution and frame rate as follows:\footnote{The increased resolution and frame rate are only an illusion, so we use them in only about seven minutes of the 104-minute recording. The remaining 97 minutes consist of animated panels rendered in native \acro{4K} resolution at 50~\acro{FPS}.}
+First, we stabilized the handheld footage using the \texttt{vidstabdetect} and \texttt{vidstab\discretionary{\textrm{-}}{}{}transform} \acro{FF}mpeg filters and then we increased the resolution and framerate as follows:\footnote{The increased resolution and framerate are only an illusion, so we use them in only about seven minutes of the 104-minute recording. The remaining 97 minutes consist of animated panels rendered in native \acro{4K} resolution at 50~\acro{FPS}.}
+
+\begin{filecontents}[overwrite,nosearch,noheader]{example-minterpolate-frames-01.sh}
+   $ ffmpeg -i input-video.mp4  -vf minterpolate \
+           frame-images/%d.png
+\end{filecontents}
+\begin{filecontents}[overwrite,nosearch,noheader]{example-minterpolate-frames-02.sh}
+   $ ffmpeg -framerate 50 -i frame-images/%d.png \
+                                output-video.mp4
+\end{filecontents}
 
 \begin{itemize}
-\item For interlaced video, we first increased the frame rate using the \acro{FF}mpeg filter \texttt{yadif}, which interpolates missing half-frames (fields) from adjacent fields and lines. We then increased the resolution using waifu2x.
-\item For non-interlaced video, we first increased the resolution using waifu2x. We then increased the frame rate using the \texttt{minterpolate} \acro{FF}mpeg filter, which interpolates missing frames from adjacent frames.
+\item For interlaced video, we first increased the framerate using the \acro{FF}mpeg filter \texttt{yadif}, which interpolates missing half-frames (fields) from adjacent fields and lines. We then increased the resolution using waifu2x.
+\item For non-interlaced video, we first increased the resolution using waifu2x. We then increased the framerate using the \texttt{minterpolate} \acro{FF}mpeg filter, which interpolates missing frames from adjacent frames.%
+\footnote{When the camera or subject move fast, the \texttt{minterpolate} filter may produce visual artifacts near the edges of frames and objects. When processing Donald Knuth's lectures at \acro{FI MU}, we therefore first produced frame images from our video:
+\begin{mintedblock}
+\inputminted{bash}{example-minterpolate-frames-01.sh}
+\end{mintedblock}
+\noindent
+We then inspected the frame images manually and deleted those in which artifacts were visible on Donald Knuth's person. Finally, we created the output video from the frame images:
+\begin{mintedblock}
+\inputminted{bash}{example-minterpolate-frames-02.sh}
+\end{mintedblock}
+\noindent
+The video had a variable framerate of 25--50~\acro{FPS}, depending on the number of deleted images.}
 \end{itemize}
 
 \subsection{Audio acquisition}

@@ -14,7 +14,7 @@
 $ ffmpeg -i input-video.mp4 -f image2 frame-images/%06d.png
 $ find frame-images/ -name '*.png' | sort > frame-images.txt
 $ th waifu2x.lua -l frame-images.txt -model_dir models/photo \
->                 -tta 1 -o enlarged-images/%06d.png
+>                -tta 1 -o enlarged-images/%06d.png
 $ ffmpeg -framerate 25 enlarged-images/%06d.png output-video.mp4
 \end{BVerbatim}
 \par\vspace{2.5pt}%

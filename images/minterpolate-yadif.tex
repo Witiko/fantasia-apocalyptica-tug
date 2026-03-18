@@ -1,0 +1,44 @@
+\begingroup
+\centering
+\begin{subfigure}{\linewidth}
+\input images/camcorder-minterpolate-yadif
+\vspace{-16pt}
+\caption{Digital video cameras capture many frames per second.}
+\end{subfigure}
+\setkeys{Gin}{width=28.74615pt,height=28.74615pt}%
+\par\vspace{10pt}%
+\begin{subfigure}[t]{0.45\linewidth}
+\input images/frames/input-progressive-frames
+\caption{In non-interlaced (progressive) video (above), each frame contains the image at a given moment. In interlaced video (above right), each frame contains two half-frames (fields) at half resolution (right) from two adjacent moments.}
+\end{subfigure}\hspace{10pt}%
+\begin{subfigure}[t]{0.45\linewidth}
+\input images/frames/input-interlaced-frames
+\par
+\input images/frames/input-uninterlaced-subframes-flat
+\end{subfigure}
+\par\vspace{10pt}%
+\begin{subfigure}[t]{0.45\linewidth}
+\leavevmode\kern28pt
+\begin{BVerbatim}
+$ ffmpeg -i input-video.mp4 \
+>          -vf minterpolate \
+>          output-video.mp4
+\end{BVerbatim}
+\par\vspace{2.5pt}%
+\input images/frames/output-minterpolate-frames
+\vspace{-4pt}
+\caption{In progressive video, the \texttt{minterpolate} filter can estimate intermediate frames from time-adjacent frames.}
+\end{subfigure}\hspace{10pt}%
+\begin{subfigure}[t]{0.45\linewidth}
+\leavevmode\kern28pt
+\begin{BVerbatim}
+$ ffmpeg -i input-video.mp4 \
+>      -vf yadif=send_field \
+>          output-video.mp4
+\end{BVerbatim}
+\par\vspace{2.5pt}%
+\input images/frames/output-yadif-frames
+\vspace{-4pt}
+\caption{In interlaced video, the \texttt{yadif} filter can estimate full-resolution frames from time-adjacent fields and space-adjacent lines.}
+\end{subfigure}\par
+\endgroup
