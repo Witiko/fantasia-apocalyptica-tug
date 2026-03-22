@@ -43,7 +43,7 @@
 \maketitle
 
 \begin{abstract}
-On October 11, 2019, the Czech premiere of the multimedia work \emph{Fantasia Apocalyptica} took place at Masaryk University, marking the 25th anniversary of its Faculty of Informatics (\acro{FI~MU}) and featuring the composer and author Donald Knuth. The performance was recorded and later \href{https://youtu.be/wk7dEKMPP68}{published on the faculty's YouTube channel}.
+On October 11, 2019, the Czech premiere of the multimedia work \emph{Fantasia Apocalyptica}~\cite{knuth2023fantasia} took place at Masaryk University, marking the 25th anniversary of its Faculty of Informatics (\acro{FI~MU}) and featuring the composer and author Donald Knuth. The performance was recorded and later \href{https://youtu.be/wk7dEKMPP68}{published on the faculty's YouTube channel}.~\cite{fimu2020english}
 
 In this article, written on the occasion of Knuth's 88th birthday, we describe the complete preparation of the recording, from processing the raw audio and video footage through recreating the projection panels that accompanied the performance to assembling the final master. With the exception of super-resolution enhancement, introductory and closing edits, and audio compression, the workflow relies exclusively on free and open-source tools, including \TeX, Audacity, Aegisub, \acro{FF}mpeg, \acro{MLT}, \acro{PDF}tk, and ImageMagick. The article explains how these tools can be combined into a practical, reproducible workflow that readers may apply to their own recordings.
 \end{abstract}
@@ -60,7 +60,7 @@ The Czech premiere of Donald Knuth's multimedia organ oratorio, \emph{Fantasia A
 \item[Honoring a Pioneer:] Donald Knuth is the first honorary doctor of Masaryk University, a title awarded in 1996 on the initiative of \acro{FI MU}.
 \item[Institutional Context:] Organizing and recording the premiere reflects the faculty's long-standing association with Knuth's work and its influence on computer science and digital typography.
 \item[Typographical Context:] This connection is also reflected in the visual identity of \acro{FI MU}: its logo incorporates the ligature ``\acro{FI}'' and was created using Knuth's \hologo{METAFONT} system.~\cite[Figure~2]{Sojka:2017:TSJ}
-\item[The Work:] \emph{Fantasia Apocalyptica} is a composition based on the biblical \emph{Book of Revelation}. It combines musical structure with textual and visual elements, including symbolic imagery and notation, resulting in a multi-layered presentation.
+\item[The Work:] \emph{Fantasia Apocalyptica} is a composition based on the biblical \emph{Book of Revelation}. It combines musical structure with textual and visual elements, based on a dictionary of symbolic musical motifs~\cite{knuth2023fantasia} and accompanying imagery, resulting in a multi-layered presentation.
 \end{description}
 
 The rest of this article describes the open-source workflow used to turn the raw footage into a high-resolution recording. Section~\ref{sec:acquisition} covers the acquisition and processing of the raw audiovisual data. Section~\ref{sec:opening-speech-and-closing-segment} describes the preparation of the opening speech and closing segment. Section~\ref{sec:panels} covers the preparation of the panels accompanying the performance. Section~\ref{sec:final-video-assembly} explains how these parts were combined into the final recording. Finally, Section~\ref{sec:conclusion} describes the screening of the finished video at \acro{FI~MU} on December~18, 2019.
