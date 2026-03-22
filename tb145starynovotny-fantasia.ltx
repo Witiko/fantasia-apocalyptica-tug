@@ -285,6 +285,49 @@ $ ffmpeg -loop 1 -framerate 50           \
 Finally, we concatenated the image and transition videos into three animated videos: Greek and English text, Czech text, and illustrations~\cite{ffmpeg-concat}.
 
 \subsection{Organ sheet music}
+For each of the 22 chapters, Tom\'{a}\v{s} Szaniszlo opened digitized organ scores in a \acro{PDF} viewer and recorded the screen while playing back the audio. He scrolled the score in sync with the performance, producing 22 videos; see Figure~\ref{fig:screen3}.
+
+We cropped the videos from 1920\,px to 1344\,px to remove side margins:
+\begingroup
+\small
+\begin{verbatim}
+$ ffmpeg -i input-video.mp4 \
+>        -vf 'crop=1344:1076:280:4,
+>             pad=w=1920:h=1076:x=ow-iw/2'\
+>               ':y=oh-ih/2:color=white'  \
+>          output-video.mp4
+\end{verbatim}
+\endgroup
+
+We then added a white rectangle at the top of the video. Initially, it overlays the top margin; once Tom\'{a}\v{s} has scrolled down, it becomes a semi-transparent gradient:\footnote{The variable \texttt{\$N} denotes the frame at which the rectangle becomes semi-transparent.}
+\begingroup
+\small
+\begin{verbatim}
+$ ffmpeg -i input-video.mp4 \
+>        -vf "drawbox=0:0:1920:62:white:fill"\
+>            :enable='lte(n,$N)',
+>             ...
+>             drawbox=0:61:1920:1:white@0.016"\
+>            :enable='gt(n,$N)'" \
+>          output-video.mp4
+\end{verbatim}
+\endgroup
+
+We then edited and synchronized the videos in Flowblade and rendered the final output using Melt:
+\begingroup
+\small
+\begin{verbatim}
+$ melt project.xml -consumer avformat:out.mp4 \
+>      vcodec=libx265 crf=17 pix_fmt=yuv420p  \
+>      acodec=aac ab=384k ar=44100
+\end{verbatim}
+\endgroup
+
+\begin{figure}[t]
+\includegraphics[width=\linewidth]{images/screen3-small}
+\caption{Video recordings of organ scores prepared by Tom\'{a}\v{s} Szaniszlo.}
+\label{fig:screen3}
+\end{figure}
 
 \section{Final video assembly}
 \label{sec:final-video-assembly}
