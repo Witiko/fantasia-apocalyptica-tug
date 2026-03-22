@@ -192,7 +192,14 @@ This section describes the preparation of the panels used in the video recording
 
 \input images/screen2-texts
 
-\subsection{Trilingual text of Revelation}
+\subsection{Trilingual text of \emph{Revelation}}
+For the Greek and English text, we used a \acro{PDF} document from the Canadian premiere, which displays the Greek text on a light yellow background and the English text on a blue background; see Figure~\ref{fig:screen2-texts-greek-and-english-original}.
+
+To match the top two colors of the Czech tricolor, we first decompressed the \acro{PDF} document using the free tool \acro{PDF}tk. We then used the \acro{POSIX} editor \texttt{sed} to modify the text and background colors so the English text appears on a red background; see Figure~\ref{fig:screen2-texts-greek-and-english-updated}.
+\looseness=-1
+
+For the Czech text, we used the Czech Ecumenical Translation with permission of the Czech Bible Society. Using \TeX, the Slabo font from Tiro Typeworks, and ImageMagick, we created a document matching the Greek and English text and displaying the text on a blue background; see Figure~\ref{fig:screen2-texts-czech}.
+
 \subsection{Illustrations by Duane Bibby}
 \subsection{Text and illustration animation}
 \subsection{Organ sheet music}
