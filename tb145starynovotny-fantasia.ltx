@@ -100,7 +100,7 @@ The lecture recordings were provided in a non-interlaced (progressive) format, w
 \end{figure*}
 
 The video was processed using the free open-source tool \acro{FF}mpeg\footnote{All \acro{FF}mpeg examples use the following output parameters for perceptually lossless compression: \texttt{-c:v libx265 -crf 17 -pix\_fmt yuv420p -c:a aac -b:a 384k -ar 44.1k}. They are omitted elsewhere for brevity.}~\cite{ffmpeg} and the open-source tool waifu2x~\cite{waifu2x}; see Figures~\ref{fig:ffmpeg-waifu2x}--\ref{fig:minterpolate-yadif}.
-First, we stabilized the handheld footage using the \texttt{vidstabdetect} and \texttt{vidstab\discretionary{\textrm{-}}{}{}transform} \acro{FF}mpeg filters and then we increased the resolution and framerate as follows:\footnote{The increased resolution and framerate are only an illusion, so we use them in only about seven minutes of the 104-minute recording. The remaining 97 minutes consist of animated panels rendered in native \acro{4K} resolution at 50~\acro{FPS}.}
+First, we stabilized the handheld footage using the \texttt{vidstabdetect} and \texttt{vidstab\discretionary{\textrm{-}}{}{}transform} \acro{FF}mpeg filters and then we increased the resolution and framerate as follows.\footnote{The increased resolution and framerate are only an illusion, so we use them in only about seven minutes of the 104-minute recording. The remaining 97 minutes consist of animated panels rendered in native \acro{4K} resolution at 50~\acro{FPS}.}
 
 \begin{filecontents}[overwrite,nosearch,noheader]{example-minterpolate-frames-01.sh}
    $ ffmpeg -i input-video.mp4  -vf minterpolate \
