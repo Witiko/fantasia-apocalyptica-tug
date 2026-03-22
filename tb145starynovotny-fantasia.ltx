@@ -217,7 +217,7 @@ $ ffmpeg -loop 1 -framerate 50 -i first-input-image.png  \
 >          [first]format=yuva420p,fade=out:st=0:d=$D:alpha=1[fadeout];
 >          [second]format=yuva420p,fade=in:st=0:d=$D:alpha=1[fadein];
 >          [fadeout][fadein]overlay[transition]
->        " -map '[transition]' -r 50 output-video.mp4
+>        " -map '[transition]' -r 50 transition.mp4
 \end{BVerbatim}
 \par\vspace{2.5pt}
 \endgroup
@@ -359,10 +359,10 @@ We combined the panel videos as shown in Figure~\ref{fig:montage-diagram}:
 \begin{verbatim}
 $ ffmpeg -f lavfi -i color=c=white:s=3840x2160\
 >                           :rate=50 \
->        -i input-greek-english.mp4 \
->        -i input-czech.mp4 \
+>        -i input-greek-and-english-text.mp4 \
+>        -i input-czech-text.mp4 \
 >        -i input-illustrations.mp4 \
->        -i input-organ.mp4 \
+>        -i input-organ-sheet-music.mp4 \
 > -filter_complex '
 >   [0:v]null[background];
 >   [1:v]null[greek-and-english-text];
@@ -377,7 +377,7 @@ $ ffmpeg -f lavfi -i color=c=white:s=3840x2160\
 >   [m1][czech-text]overlay=0:1360[m2];
 >   [m2][organ-scores]overlay=1920:1084[m3];
 >   [m3][illustrations]overlay=1920[montage]' \
-> -map '[montage]' -t 01:43:25 -r 50 final.mp4
+> -map '[montage]' -t 01:43:25 -r 50 panels.mp4
 \end{verbatim}
 \endgroup
 
