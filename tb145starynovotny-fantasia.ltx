@@ -363,25 +363,21 @@ $ ffmpeg -f lavfi -i color=c=white:s=3840x2160\
 >        -i input-czech.mp4 \
 >        -i input-illustrations.mp4 \
 >        -i input-organ.mp4 \
->        -filter_complex '
->          [0:v]null[background];
->          [1:v]null[greek-and-english-text];
->          [2:v]crop=1920:960:0:63[czech-text];
->          [3:v]pad=1920:1084:ow-iw/2:oh-ih/2'\
->                 ':white[illustrations];
->          [4:v]crop=1344:1076:280:4,
->               pad=1920:1076:ow-iw/2:oh-ih/2'\
->                 ':white[organ-scores];
->          [background][greek-and-english-text]
->            overlay=0:160[montage1];
->          [montage1][czech-text]
->            overlay=0:1360[montage2];
->          [montage2][organ-scores]
->            overlay=1920:1084[montage3];
->          [montage3][illustrations]
->            overlay=1920:0[montage]' \
->        -map '[montage]' -t 01:43:25 -r 50 \
->        output-video.mp4
+> -filter_complex '
+>   [0:v]null[background];
+>   [1:v]null[greek-and-english-text];
+>   [2:v]crop=1920:960:0:63[czech-text];
+>   [3:v]pad=1920:1084:ow-iw/2:oh-ih/2'\
+>          ':white[illustrations];
+>   [4:v]crop=1344:1076:280:4,
+>        pad=1920:1076:ow-iw/2:oh-ih/2'\
+>          ':white[organ-scores];
+>   [background][greek-and-english-text]
+>     overlay=0:160[m1];
+>   [m1][czech-text]overlay=0:1360[m2];
+>   [m2][organ-scores]overlay=1920:1084[m3];
+>   [m3][illustrations]overlay=1920[montage]' \
+> -map '[montage]' -t 01:43:25 -r 50 final.mp4
 \end{verbatim}
 \endgroup
 
@@ -390,14 +386,25 @@ We then prepended the opening speech and appended the closing to the panel video
 \section{Conclusion}
 \label{sec:conclusion}
 
+On December 18, 2019, the recording was screened in lecture hall \acro{D3} at \acro{FI~MU}; see Figure~\ref{fig:screening}.
+
+Before the screening, Tom\'{a}\v{s} Szaniszlo played a digitized version of the music accompanying the verse~2:1 of \emph{Revelation} through piezoelectric speakers in a student computer room at \acro{FI~MU}. He also displayed a message inviting students to the screening. The first author, dressed as John the Apostle, then led the surprised students to the lecture hall.
+
+The video was \href{https://youtu.be/wk7dEKMPP68}{published on the \acro{FI~MU} YouTube channel}~\cite{fimu2020english} on January 1, 2020.
+
+\begin{figure*}
+\centering
+\includegraphics[width=\linewidth]{images/2019-12-18_revelation}
+\caption{Poster announcing the screening.}
+\label{fig:screening}
+\end{figure*}
+
 \SetBibJustification{\raggedright \advance\itemsep by 2pt plus1pt minus1pt}
 \bibliographystyle{tugboat}
 \begingroup
 \gappto{\UrlBreaks}{\UrlOrds}
 \bibliography{tb145starynovotny-fantasia, tugboat}
 \endgroup
-
-\vfill
 
 \makesignature
 \end{document}
