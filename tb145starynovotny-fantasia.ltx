@@ -302,7 +302,7 @@ We cropped the videos from 1920\,px to 1344\,px to remove side margins:
 $ ffmpeg -i input-video.mp4 \
 >        -vf 'crop=1344:1076:280:4,
 >             pad=w=1920:h=1076:x=ow-iw/2'\
->               ':y=oh-ih/2:color=white'  \
+>                :y=oh-ih/2:color=white   \
 >          output-video.mp4
 \end{verbatim}
 \endgroup
@@ -343,16 +343,49 @@ $ melt project.xml -consumer avformat:out.mp4 \
 
 \begin{figure*}[t]
 \includegraphics[width=\linewidth]{images/montage-small}
-\par\vspace{-0.9cm}
+\par\vspace{-0.4cm}
 \caption{Final video.\kern 8.5cm\relax}
 \label{fig:montage}
-\par\vspace{\dimexpr(0.9cm - 1.5em)}
+\par\vspace{\dimexpr(0.4cm - 1.5em)}
 \end{figure*}
 
 \section{Final video assembly}
 \label{sec:final-video-assembly}
 
-We combined the panel videos as shown in Figure~\ref{fig:montage-diagram}.
+We combined the panel videos as shown in Figure~\ref{fig:montage-diagram}:
+
+\begingroup
+\small
+\begin{verbatim}
+$ ffmpeg -f lavfi -i color=c=white:s=3840x2160\
+>                           :rate=50 \
+>        -i input-greek-english.mp4 \
+>        -i input-czech.mp4 \
+>        -i input-illustrations.mp4 \
+>        -i input-organ.mp4 \
+>        -filter_complex '
+>          [0:v]null[background];
+>          [1:v]null[greek-and-english-text];
+>          [2:v]crop=1920:960:0:63[czech-text];
+>          [3:v]pad=1920:1084:ow-iw/2:oh-ih/2'\
+>                 ':white[illustrations];
+>          [4:v]crop=1344:1076:280:4,
+>               pad=1920:1076:ow-iw/2:oh-ih/2'\
+>                 ':white[organ-scores];
+>          [background][greek-and-english-text]
+>            overlay=0:160[montage1];
+>          [montage1][czech-text]
+>            overlay=0:1360[montage2];
+>          [montage2][organ-scores]
+>            overlay=1920:1084[montage3];
+>          [montage3][illustrations]
+>            overlay=1920:0[montage]' \
+>        -map '[montage]' -t 01:43:25 -r 50 \
+>        output-video.mp4
+\end{verbatim}
+\endgroup
+
+We then prepended the opening speech and appended the closing to the panel video montage by concatenation~\cite{ffmpeg-concat}. Figure~\ref{fig:montage} shows the final video.
 
 \section{Conclusion}
 \label{sec:conclusion}
