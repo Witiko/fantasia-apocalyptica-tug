@@ -284,6 +284,14 @@ $ ffmpeg -loop 1 -framerate 50           \
 
 Finally, we concatenated the image and transition videos into three animated videos: Greek and English text, Czech text, and illustrations~\cite{ffmpeg-concat}.
 
+\begin{figure*}[t]
+\centering
+\input images/montage-diagram
+\vspace{5pt}
+\caption{Combining panels into the final video.}
+\label{fig:montage-diagram}
+\end{figure*}
+
 \subsection{Organ sheet music}
 For each of the 22 chapters, Tom\'{a}\v{s} Szaniszlo opened digitized organ scores in a \acro{PDF} viewer and recorded the screen while playing back the audio. He scrolled the score in sync with the performance, producing 22 videos; see Figure~\ref{fig:screen3}.
 
@@ -331,6 +339,8 @@ $ melt project.xml -consumer avformat:out.mp4 \
 
 \section{Final video assembly}
 \label{sec:final-video-assembly}
+
+We combined the panel videos as shown in Figure~\ref{fig:montage-diagram}.
 
 \section{Conclusion}
 \label{sec:conclusion}
