@@ -293,7 +293,7 @@ Finally, we concatenated the image and transition videos into three animated vid
 \end{figure*}
 
 \subsection{Organ sheet music}
-For each of the 22 chapters, Tom\'{a}\v{s} Szaniszlo opened digitized organ scores in a \acro{PDF} viewer and recorded the screen while playing back the audio. He scrolled the score in sync with the performance, producing 22 videos; see Figure~\ref{fig:screen3}.
+For each of the 22 chapters, Tom\'{a}\v{s} Szaniszlo opened digitized organ scores in a \acro{PDF} viewer and recorded the screen while scrolling the score in sync with the audio, producing 22 videos; see Figure~\ref{fig:screen3}.
 
 We cropped the videos from 1920\,px to 1344\,px to remove side margins:
 \begingroup
@@ -307,19 +307,23 @@ $ ffmpeg -i input-video.mp4 \
 \end{verbatim}
 \endgroup
 
-We then added a white rectangle at the top of the video. Initially, it overlays the top margin; once Tom\'{a}\v{s} has scrolled down, it becomes a semi-transparent gradient:\footnote{The variable \texttt{\$N} denotes the frame at which the rectangle becomes semi-transparent.}
+We then added a white rectangle at the top of the video. Initially, it overlays the top margin; once Tom\'{a}\v{s} has scrolled down, it becomes a semi-transparent gradient:
 \begingroup
 \small
 \begin{verbatim}
 $ ffmpeg -i input-video.mp4 \
->        -vf "drawbox=0:0:1920:62:white:fill"\
->            :enable='lte(n,$N)',
+>        -vf "drawbox=0: 0:1920:62:white:fill"\
+>                   ":enable='lte(n,$N)',
+>             drawbox=0: 1:1920:1:white@0.983"\
+>                   ":enable='gt(n,$N)',
 >             ...
 >             drawbox=0:61:1920:1:white@0.016"\
->            :enable='gt(n,$N)'" \
+>                   ":enable='gt(n,$N)'" \
 >          output-video.mp4
 \end{verbatim}
 \endgroup
+
+The variable \texttt{\$N} denotes the frame at which the rectangle becomes semi-transparent.
 
 We then edited and synchronized the videos in Flowblade and rendered the final output using Melt:
 \begingroup
