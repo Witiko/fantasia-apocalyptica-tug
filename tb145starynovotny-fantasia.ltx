@@ -158,7 +158,7 @@ The video recordings of the opening speech and closing were edited by \v{S}imon 
  $ ffmpeg -i input-video.mp4 -vf ass=subtitles.ass \
                            video-and-subtitles.mp4
 \end{filecontents}
-Ji\v{r}\'{i} Zlatu\v{s}ka's opening speech was provided with subtitles in the \acro{ASS} format.\footnote{The FFmpeg filter \texttt{ass} can be used to burn subtitles into the video image:
+Ji\v{r}\'{i} Zlatu\v{s}ka's opening speech was provided with subtitles in the \acro{ASS} format.\footnote{The \acro{FF}mpeg filter \texttt{ass} can be used to burn subtitles into the video image:
 \begin{mintedblock}
 \inputminted{text}{example-ass.sh}
 \end{mintedblock}
@@ -223,12 +223,12 @@ $ ffmpeg -loop 1 -framerate 50 -i first-input-image.png  \
 \endgroup
 \input images/transition/transition
 \par\vspace{5pt}
-\caption{Transition animation between two images using FFmpeg.}
+\caption{Transition animation between two images using \acro{FF}mpeg.}
 \label{fig:transition}
 \end{figure*}
 
 \subsection{Text and illustration animation}
-We first generated transition animations between successive images using FFmpeg; see Figure~\ref{fig:transition}.\footnote{The variable \texttt{\$D} denotes the transition duration in seconds. We used \texttt{D=0.52} for short transitions (520\,ms) and \texttt{D=1} for long transitions (1\,s). At 50~\acro{FPS}, short transitions last 26 frames and long transitions 50 frames.}
+We first generated transition animations between successive images using \acro{FF}mpeg; see Figure~\ref{fig:transition}.\footnote{The variable \texttt{\$D} denotes the transition duration in seconds. We used \texttt{D=0.52} for short transitions (520\,ms) and \texttt{D=1} for long transitions (1\,s). At 50~\acro{FPS}, short transitions last 26 frames and long transitions 50 frames.}
 
 \begin{figure}[t]
 \includegraphics[width=\linewidth]{images/flowblade-small}
@@ -271,7 +271,7 @@ For example, a line \texttt{194.png 1119} in the output file \texttt{illustratio
 
 We selected transitions based on image duration: images shorter than 2 seconds are followed immediately by the next image; those 2--5 seconds long by a short transition (520\,ms); and those longer than 5 seconds by a long transition (1\,s).
 
-We then generated a video for each image using FFmpeg, with duration reduced by the transition time. For example:
+We then generated a video for each image using \acro{FF}mpeg, with duration reduced by the transition time. For example:
 \begingroup
 \small
 \begin{verbatim}
