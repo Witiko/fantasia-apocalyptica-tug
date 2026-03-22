@@ -1,0 +1,51 @@
+\begin{figure*}[p]
+\begin{subfigure}{\linewidth}
+\centering
+\includegraphics[trim={0 65mm 0 21.75mm}, clip, width=\linewidth, page=406]{images/screen2-texts}
+\par\vspace{3.5pt}
+\includegraphics[trim={0 7mm 0 75mm}, clip, width=\linewidth, page=406]{images/screen2-texts}
+\par\vspace{-1.5pt}
+\caption{For the upper part of the panel, we used the Greek and English text from the Canadian premiere.~\cite{morland2018fantasia}}
+\label{fig:screen2-texts-greek-and-english-original}
+\end{subfigure}
+\par\vspace{8.5pt}
+\begin{subfigure}{\linewidth}
+\begingroup
+\begin{verbatim}
+   $ pdftk document.pdf output decompressed-document.pdf uncompress
+   $ sed -i decompressed-document.pdf \
+   > -e 's/\.686 \.933 \.933 RG \.686 \.933 \.933 rg/1 .890 .902 RG 1 .890 .902 rg/' \
+   > -e 's/\.627 \.322 \.176 RG \.627 \.322 \.176 rg/.184 .31 .31 RG .184 .31 .31 rg/'
+\end{verbatim}
+\endgroup
+\par\vspace{1.5pt}
+\centering
+\includegraphics[trim={0 7mm 0 75mm}, clip, width=\linewidth, page=406]{images/screen2-texts-replaced-color-compressed}
+\par\vspace{-1.5pt}
+\caption{We decompressed the \acro{PDF} using \acro{PDF}tk and modified it with the \acro{POSIX} editor \texttt{sed} so that the English text appears on a red background, forming the top two colors of the Czech tricolor with the Greek text.}
+\label{fig:screen2-texts-greek-and-english-updated}
+\end{subfigure}
+\par\vspace{8.5pt}
+\begin{subfigure}{\linewidth}
+\begingroup
+\begin{verbatim}
+   $ parallel -- convert -density 600 {} -resize '1920x1200!' sRGB {.}.png ::: *.pdf
+   $ BLUR='-resize 50% -filter Gaussian -define filter:sigma=12 -resize 200%'
+   $ convert background.png \( \( glowing-text.png $BLUR \) base-text.png \
+   >                           -composite \) -composite final-overlay-text.png
+\end{verbatim}
+\endgroup
+\par\vspace{1.5pt}
+\centering
+\begin{tikzpicture}[every node/.style={inner sep=0pt, outer sep=0pt}]
+\node at (0, 0) {\includegraphics[trim={0 85mm 0 6.8mm}, clip, width=\linewidth, page=406]{images/screen2-czech/fantasia-background}};
+\node at (0, 0) {\includegraphics[trim={0 286.9mm 0 22.9mm}, clip, width=\linewidth]{images/screen2-czech/fantasia-effects-406}};
+\node at (0, 0) {\includegraphics[trim={0 85mm 0 6.8mm}, clip, width=\linewidth, page=406]{images/screen2-czech/fantasia-text}};
+\end{tikzpicture}
+\par\vspace{-1.5pt}
+\caption{For the lower part of the panel, we created a \TeX\ document with the Czech Ecumenical Translation of the \emph{Book of Revelation}. To produce a glow effect, we generated three versions: background, glowing text, and base text. We rasterized the documents to bitmaps, blurred the glowing text, and composited the images using ImageMagick.}
+\label{fig:screen2-texts-czech}
+\end{subfigure}
+\caption{Preparing the panel with the \emph{Book of Revelation} in three languages.}
+\label{fig:screen2-texts}
+\end{figure*}
