@@ -199,7 +199,7 @@ For the Greek and English text, we used a \acro{PDF} document from the Canadian 
 To match the top two colors of the Czech tricolor, we first decompressed the \acro{PDF} document using the free tool \acro{PDF}tk. We then used the \acro{POSIX} editor \texttt{sed} to modify the text and background colors so the English text appears on a red background; see Figure~\ref{fig:screen2-texts-greek-and-english-updated}.
 \looseness=-1
 
-For the Czech text, we used the Czech Ecumenical Translation with permission of the Czech Bible Society. Using \TeX, the Slabo font from Tiro Typeworks, and ImageMagick, we created a document matching the Greek and English text and displaying the text on a blue background; see Figure~\ref{fig:screen2-texts-czech}.
+For the Czech text, we used the Czech Ecumenical Translation with permission of the Czech Bible Society. Using \TeX, the Slabo font from Tiro Typeworks, and ImageMagick~\cite{imagemagick}, we created a document matching the Greek and English text and displaying the text on a blue background; see Figure~\ref{fig:screen2-texts-czech}.
 
 \subsection{Illustrations by Duane Bibby}
 We first extracted Duane Bibby's illustrations from the \acro{PDF} document using the free open-source tool pdfimages. We then increased their resolution using waifu2x, similarly to Figure~\ref{fig:waifu2x}.
@@ -237,7 +237,51 @@ We first generated transition animations between successive images using FFmpeg;
 
 We then synchronized the images with the audio of the performance using the free video editor Flowblade; see Figure~\ref{fig:flowblade}. We exported the Flowblade project to an \acro{XML} file in the format used by the \acro{MLT} library and extracted image timing data using the following Python~3 program:
 
-\vfill
+\begin{mintedblock}
+\begingroup
+\small
+\begin{minted}{python}
+import xml.etree.ElementTree as ET
+from pathlib import Path
+
+images, tree = {}, ET.parse('project.xml')
+for producer in tree.findall('.//producer'):
+  image = Path(producer\
+    .find('property[@name="resource"]')\
+    .text)
+  producer_id = producer.attrib['id']
+  entry = tree.find('.//playlist/entry'
+        f'[@producer="{producer_id}"]')
+  images[image] = int(entry.attrib['out']) \
+                - int(entry.attrib['in']) + 1
+
+sorted_images = sorted(images.items())
+with open('illustrations.txt', 'wt') as f1, \
+     open('texts.txt', 'wt') as f2:
+  for image, duration in sorted_images:
+    dir = image.parent.name
+    f = f1 if dir == 'illustrations' else f2
+    print(f'{image.name} {duration}', file=f)
+\end{minted}
+\endgroup
+\end{mintedblock}
+
+For example, a line \texttt{194.png 1119} in the output file \texttt{illustrations.txt} means that the image \texttt{illustrations/194.png} (shown in Figures~\ref{fig:transition} and~\ref{fig:flowblade}) lasts 1,119 frames, i.e., about 22 seconds at 50~\acro{FPS}.
+
+We selected transitions based on image duration: images shorter than 2 seconds are followed immediately by the next image; those 2--5 seconds long by a short transition (520\,ms); and those longer than 5 seconds by a long transition (1\,s).
+
+We then generated a video for each image using FFmpeg, with duration reduced by the transition time. For example:
+\begingroup
+\small
+\begin{verbatim}
+$ ffmpeg -loop 1 -framerate 50           \
+>        -i illustrations/194.png        \
+>        -t $(bc -l <<< '1119 / 50 - 1') \
+>        -r 50 output-video-verse-21-08.mp4
+\end{verbatim}
+\endgroup
+
+Finally, we concatenated the image and transition videos into three animated videos: Greek and English text, Czech text, and illustrations~\cite{ffmpeg-concat}.
 
 \subsection{Organ sheet music}
 
