@@ -204,7 +204,41 @@ For the Czech text, we used the Czech Ecumenical Translation with permission of 
 \subsection{Illustrations by Duane Bibby}
 We first extracted Duane Bibby's illustrations from the \acro{PDF} document using the free open-source tool pdfimages. We then increased their resolution using waifu2x, similarly to Figure~\ref{fig:waifu2x}.
 
+\begin{figure*}[t!]
+\begingroup
+\small
+\leavevmode\kern52pt
+\begin{BVerbatim}
+$ ffmpeg -loop 1 -framerate 50 -i first-input-image.png  \
+>        -loop 1 -framerate 50 -i second-input-image.png \
+>        -filter_complex "
+>          [0:v]trim=start=0:end=$D[first]; [1:v]trim=start=0:end=$D[second];
+>          [first]format=yuva420p,fade=out:st=0:d=$D:alpha=1[fadeout];
+>          [second]format=yuva420p,fade=in:st=0:d=$D:alpha=1[fadein];
+>          [fadeout][fadein]overlay[transition]
+>        " -map '[transition]' -r 50 output-video.mp4
+\end{BVerbatim}
+\par\vspace{2.5pt}
+\endgroup
+\input images/transition/transition
+\par\vspace{5pt}
+\caption{Transition animation between two images using FFmpeg.}
+\label{fig:transition}
+\end{figure*}
+
 \subsection{Text and illustration animation}
+We first generated transition animations between successive images using FFmpeg; see Figure~\ref{fig:transition}.\footnote{The variable \texttt{\$D} denotes the transition duration in seconds. We used \texttt{D=0.52} for short transitions (520\,ms) and \texttt{D=1} for long transitions (1\,s). At 50~\acro{FPS}, short transitions last 26 frames and long transitions 50 frames.}
+
+\begin{figure}[t]
+\includegraphics[width=\linewidth]{images/flowblade-small}
+\caption{Synchronizing text and illustration panels with the audio in Flowblade.}
+\label{fig:flowblade}
+\end{figure}
+
+We then synchronized the images with the audio of the performance using the free video editor Flowblade; see Figure~\ref{fig:flowblade}. We exported the Flowblade project to an \acro{XML} file in the format used by the \acro{MLT} library and extracted image timing data using the following Python~3 program:
+
+\vfill
+
 \subsection{Organ sheet music}
 
 \section{Final video assembly}
