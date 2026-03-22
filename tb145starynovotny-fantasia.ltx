@@ -78,7 +78,7 @@ Although the video was acquired in a resolution of $1920\times1080$\,px at 25 fr
 The lecture recordings were provided in a non-interlaced (progressive) format, whereas the footage of the church, organ, and opening speech was in an interlaced format. In addition, the lectures and opening speech were recorded from a tripod, in contrast to the handheld shots of the church and organ. The goal of the video processing was therefore not only to increase the resolution and framerate, but also to unify the video format and stabilize the handheld footage.
 \looseness=-1
 
-\begin{figure*}[h!]
+\begin{figure*}[p]
 \centering
 \input images/ffmpeg-waifu2x-activity-diagram
 \caption{Activity diagram of video processing using \acro{FF}mpeg and waifu2x.}
@@ -93,7 +93,7 @@ The lecture recordings were provided in a non-interlaced (progressive) format, w
 \label{fig:waifu2x}
 \end{figure*}
 
-\begin{figure*}[h!]
+\begin{figure*}[t]
 \input images/minterpolate-yadif
 \caption{Increasing the video framerate using \acro{FF}mpeg filters.}
 \label{fig:minterpolate-yadif}
@@ -135,7 +135,11 @@ The audio of the performance was recorded using six microphones:
     \item A Roland~\acro{R26} microphone and the Sony~\acro{PXW-X70} camera microphone were placed in the choir loft and aimed at the organ.
 \end{itemize}
 
-The audio was preprocessed by Petr Holub\'{a}\v{r}. The main input of their mix was the stereo recording from the Oktava~\acro{MK012} microphones. To add presence, Petr lightly mixed in the direct organ signal from the Roland~\acro{R26} microphone, applying frequency filtering to avoid undesirable phase shifts in the low-frequency range. To reduce the dynamic range, they used the digital \acro{VST} module \acro{SSL}~G-Master Buss Compressor from Waves Audio.
+The audio was preprocessed by Petr Holub\'{a}\v{r}. The main input of their mix was the stereo recording from the Oktava~\acro{MK012} microphones.
+
+To add presence, Petr lightly mixed in the direct organ signal from the Roland~\acro{R26} microphone, applying frequency filtering to avoid undesirable phase shifts in the low-frequency range.
+
+To reduce the dynamic range, Petr used the digital \acro{VST} module \acro{SSL}~G-Master Buss Compressor from Waves Audio.
 
 \subsection{Audio processing}
 The audio was processed using the free open-source program Audacity; see Figure~\ref{fig:audacity}. The resulting mix includes the freely licensed sound of the bell of Constance Cathedral~\cite{edsward2016church}, the preprocessed audio of the performance from Petr Holub\'{a}\v{r}, and Ji\v{r}\'{i} Zlatu\v{s}ka's opening speech underscored by ambient sound from the Oktava~\acro{MK012} microphones.
@@ -159,8 +163,33 @@ Ji\v{r}\'{i} Zlatu\v{s}ka's opening speech was provided with subtitles in the \a
 \noindent
 The \texttt{ass} filter is implemented by the \texttt{libass} software library, which by default does not use the kerning table of the selected font~\cite{enable-kerning-by-default}. To enable kerning, add the line \texttt{Kerning:} \texttt{yes} to the \texttt{[Script Info]} section of the \texttt{subtitles.ass} file.} The subtitles were prepared using the free tool Aegisub~\cite{aegisub}; see Figure~\ref{fig:aegisub}.
 
+\begin{figure}[t]
+\includegraphics[width=\linewidth]{images/audacity-small}
+\caption{Audio processing in Audacity. The resulting mix includes the bell sound (top), the preprocessed audio of the performance from Petr Holub\'{a}\v{r} (second from top), and Ji\v{r}\'{i} Zlatu\v{s}ka's opening speech (center) underscored by ambient sound (bottom).}
+\label{fig:audacity}
+\end{figure}
+
+\begin{figure}[t]
+\includegraphics[width=\linewidth]{images/aegisub-small}
+\caption{Opening speech subtitles in Aegisub.}
+\label{fig:aegisub}
+\end{figure}
+
 \section{Panels accompanying the organ oratorio}
 \label{sec:panels}
+
+The performance was accompanied by a projection on two panels: The first displayed the text of the \emph{Book of Revelation} in New Testament Greek and an English translation, and the second displayed illustrations by Duane Bibby.\footnote{Duane Bibby's illustrations also appear in \emph{Fantasia Apocalyptica Illustrated}~\cite{knuth2018fantasia}, available on \href{https://www.amazon.com/Fantasia-Apocalyptica-Illustrated-Donald-Knuth/dp/1684000440}{Amazon} and elsewhere.}
+
+In the video recording, we enhanced the panels as follows:
+\begin{enumerate}
+\item We added a Czech translation of the Book of Revelation to the text panel.
+\item We increased the resolution of Duane Bibby's illustrations.
+\item We added animations to transitions between text and illustrations on the first two panels.
+\item Tom\'{a}\v{s} Szaniszlo prepared a third panel displaying organ sheet music.
+\end{enumerate}
+
+This section describes the preparation of the panels used in the video recording.
+
 \subsection{Trilingual text of Revelation}
 \subsection{Illustrations by Duane Bibby}
 \subsection{Text and illustration animation}
