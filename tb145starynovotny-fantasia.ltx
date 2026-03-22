@@ -342,11 +342,11 @@ $ melt project.xml -consumer avformat:out.mp4 \
 \end{figure}
 
 \begin{figure*}[t]
-\includegraphics[width=\linewidth]{images/montage-small}
-\par\vspace{-0.4cm}
-\caption{Final video.\kern 8.5cm\relax}
+\fboxsep=0pt
+\fbox{\includegraphics[width=\dimexpr(\linewidth-2\fboxrule-2\fboxsep)]{images/montage-small}}
+\par\vspace{5pt}
+\caption{Final video.}
 \label{fig:montage}
-\par\vspace{\dimexpr(0.4cm - 1.5em)}
 \end{figure*}
 
 \section{Final video assembly}
