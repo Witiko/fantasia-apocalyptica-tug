@@ -1,6 +1,12 @@
 \documentclass[final]{ltugboat}
 \usepackage[T1]{fontenc} % tt \_
-\usepackage{lmodern, microtype, subcaption, hologo}
+%
+% restore tub caption formatting.
+\makeatletter \let\tub@makecaption=\@makecaption \makeatother
+\usepackage{subcaption}
+\makeatletter \let\@makecaption=\tub@makecaption \makeatother
+%
+\usepackage{lmodern, microtype, hologo}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{decorations.pathmorphing}
@@ -22,6 +28,8 @@
 \def\slash{\discretionary{/}{/}{/}}
 \def\hyphen{\discretionary{-}{-}{-}}
 \def\url{\tbsurl}
+
+\hyphenation{frame-rate}
 
 %%% Start of metadata %%%
 \title{From footage to film: Recording and editing the Czech premiere of \emph{Fantasia~Apocalyptica}}
@@ -56,18 +64,18 @@ In this article, written on the occasion of Knuth's 88th birthday, we describe t
 
 The Czech premiere of Donald Knuth's multimedia organ oratorio, \emph{Fantasia Apocalyptica}, was a notable cultural and academic event connected with several historical and institutional milestones:
 \begin{description}
-\item[A Quarter Century:] The event formed the main part of the 25th-anniversary celebrations of \acro{FI MU}, see also \url{25.fi.muni.cz}.
-\item[Honoring a Pioneer:] Donald Knuth is the first honorary doctor of Masaryk University, a title awarded in 1996 on the initiative of \acro{FI MU}.
-\item[Institutional Context:] Organizing and recording the premiere reflects the faculty's long-standing association with Knuth's work and its influence on computer science and digital typography.
-\item[Typographical Context:] This connection is also reflected in the visual identity of \acro{FI MU}: its logo incorporates the ligature ``\acro{FI}'' and was created using Knuth's \hologo{METAFONT} system.~\cite[Figure~2]{Sojka:2017:TSJ}
-\item[The Work:] \emph{Fantasia Apocalyptica} is a composition based on the biblical \emph{Book of Revelation}. It combines musical structure with textual and visual elements, based on a dictionary of symbolic musical motifs~\cite{knuth2023fantasia} and accompanying imagery.
+\item[A quarter century:] The event formed the main part of the 25th-anniversary celebrations of \acro{FI MU}; see also \url{25.fi.muni.cz}.
+\item[Honoring a pioneer:] Donald Knuth is the first honorary doctor of Masaryk University, a title awarded in 1996 on the initiative of \acro{FI MU}.
+\item[Institutional context:] organizing and recording the premiere reflects the faculty's long-standing association with Knuth's work and its influence on computer science and digital typography.
+\item[Typographical context:] This connection is also reflected in the visual identity of \acro{FI MU}: its logo incorporates the ligature ``\acro{FI}'' and was created using Knuth's \hologo{METAFONT} system.~\cite[Figure~2]{xSojka:2017:TSJ}
+\item[The work:] \emph{Fantasia Apocalyptica} is a composition based on the biblical \emph{Book of Revelation}. It combines musical structure with textual and visual elements, based on a dictionary of symbolic musical motifs~\cite{knuth2023fantasia} and accompanying imagery.
 \end{description}
 
 The rest of this article describes the open-source workflow used to turn the raw footage into a high-resolution recording. Section~\ref{sec:acquisition} covers acquisition and processing of the raw audiovisual data; Section~\ref{sec:opening-speech-and-closing-segment} the preparation of the opening speech and closing segment; Section~\ref{sec:panels} the preparation of the accompanying panels; and Section~\ref{sec:final-video-assembly} the assembly of the final recording. Finally, Section~\ref{sec:conclusion} describes the screening of the finished video at \acro{FI~MU} on December~18, 2019.
 
 \section{Audiovisual acquisition and processing}
 \label{sec:acquisition}
-The video and audio of the performance were acquired and preprocessed by Pavel \v{S}iler, Petr Holub\'{a}\v{r}, and students of the \acro{LEMMA} laboratory.~\cite{lemma} We normalized the video format and mixed ambient sound and the opening speech into the audio.
+The video and audio of the performance were acquired and preprocessed by Pavel \v{S}iler, Petr Holub\'{a}\v{r}, and students of the \acro{LEMMA} laboratory~\cite{lemma}. We normalized the video format and mixed ambient sound and the opening speech into the audio.
 
 \subsection{Video acquisition}
 The video recording of the performance was made by Pavel \v{S}iler using a Sony~\acro{PXW-X70} camera. The footage includes Donald Knuth's lectures at \acro{FI~MU}, as well as shots of the church and organ and the opening speech by Ji\v{r}\'{i} Zlatu\v{s}ka, then dean of \acro{FI~MU}.
@@ -87,7 +95,7 @@ The lecture recordings were provided in a non-interlaced (progressive) format, w
 \par
 \input images/vidstabdetect-vidstabtransform
 \caption{Video stabilization using \acro{FF}mpeg filters.}
-\par\medskip
+\par\bigskip
 \label{fig:vidstabdetect-vidstabtransform}
 \input images/waifu2x.tex
 \caption{Increasing the video resolution using waifu2x.}
@@ -101,7 +109,7 @@ The lecture recordings were provided in a non-interlaced (progressive) format, w
 \label{fig:minterpolate-yadif}
 \end{figure*}
 
-The video was processed using the free open-source tool \acro{FF}mpeg\footnote{All \acro{FF}mpeg examples use the following output parameters for perceptually lossless compression: \texttt{-c:v libx265 -crf 17 -pix\_fmt yuv420p -c:a aac -b:a 384k -ar 44.1k}. They are omitted elsewhere for brevity.}~\cite{ffmpeg} and the open-source tool waifu2x~\cite{waifu2x}; see Figures~\ref{fig:ffmpeg-waifu2x}--\ref{fig:minterpolate-yadif}.
+The video was processed using the free open-source tool \acro{FF}mpeg\footnote{\raggedright All \acro{FF}mpeg examples use the following output parameters for perceptually lossless compression:\\ \texttt{-c:v libx265 -crf 17 -pix\_fmt yuv420p -c:a aac -b:a 384k -ar 44.1k}. They are omitted elsewhere for brevity.}~\cite{ffmpeg} and the open-source tool waifu2x~\cite{waifu2x}; see Figures~\ref{fig:ffmpeg-waifu2x}--\ref{fig:minterpolate-yadif}.
 First, we stabilized the handheld footage using the \texttt{vidstabdetect} and \texttt{vidstab\discretionary{\textrm{-}}{}{}transform} \acro{FF}mpeg filters and then we increased the resolution and framerate as follows.\footnote{The increased resolution and framerate are only an illusion, so we use them in only about seven minutes of the 104-minute recording. The remaining 97 minutes consist of animated panels rendered in native \acro{4K} resolution at 50~\acro{FPS}.}
 
 \begin{filecontents}[overwrite,nosearch,noheader]{example-minterpolate-frames-01.sh}
@@ -116,12 +124,12 @@ First, we stabilized the handheld footage using the \texttt{vidstabdetect} and \
 \begin{itemize}
 \item For interlaced video, we first increased the framerate using the \acro{FF}mpeg filter \texttt{yadif}, which interpolates missing half-frames (fields) from adjacent fields and lines. We then increased the resolution using waifu2x.
 \item For non-interlaced video, we first increased the resolution using waifu2x. We then increased the framerate using the \texttt{minterpolate} \acro{FF}mpeg filter, which interpolates missing frames from adjacent frames.%
-\footnote{When the camera or subject move fast, the \texttt{minterpolate} filter may produce visual artifacts near the edges of frames and objects. When processing Donald Knuth's lectures at \acro{FI MU}, we therefore first produced frame images from our video:
+\footnote{When the camera or subject moves fast, the \acro{FF}mpeg \texttt{minterpolate} filter may produce visual artifacts near the edges of frames and objects. When processing Donald Knuth's lectures at \acro{FI MU}, we therefore first produced frame images from our video:
 \begin{mintedblock}
 \inputminted{bash}{example-minterpolate-frames-01.sh}
 \end{mintedblock}
 \noindent
-We then inspected the frame images manually and deleted those in which artifacts were visible on Donald Knuth's person. Finally, we created the output video from the frame images:
+We then inspected the frame images manually and deleted those in which artifacts were visible on Knuth's person. Finally, we created the output video from the frame images:
 \begin{mintedblock}
 \inputminted{bash}{example-minterpolate-frames-02.sh}
 \end{mintedblock}
@@ -222,7 +230,7 @@ $ ffmpeg -loop 1 -framerate 50 -i first-input-image.png  \
 \par\vspace{2.5pt}
 \endgroup
 \input images/transition/transition
-\par\vspace{5pt}
+\par%\vspace{5pt}
 \caption{Transition animation between two images using \acro{FF}mpeg.}
 \label{fig:transition}
 \end{figure*}
@@ -248,8 +256,7 @@ from pathlib import Path
 images, tree = {}, ET.parse('project.xml')
 for producer in tree.findall('.//producer'):
   image = Path(producer\
-    .find('property[@name="resource"]')\
-    .text)
+    .find('property[@name="resource"]').text)
   producer_id = producer.attrib['id']
   entry = tree.find('.//playlist/entry'
         f'[@producer="{producer_id}"]')
@@ -287,7 +294,7 @@ Finally, we concatenated the image and transition videos into three animated vid
 \begin{figure*}[t]
 \centering
 \input images/montage-diagram
-\vspace{5pt}
+%\vspace{5pt}
 \caption{Combining panels into the final video.}
 \label{fig:montage-diagram}
 \end{figure*}
@@ -344,7 +351,7 @@ $ melt project.xml -consumer avformat:out.mp4 \
 \begin{figure*}[t]
 \fboxsep=0pt
 \fbox{\includegraphics[width=\dimexpr(\linewidth-2\fboxrule-2\fboxsep)]{images/montage-small}}
-\par\vspace{5pt}
+\par%\vspace{5pt}
 \caption{Final video.}
 \label{fig:montage}
 \end{figure*}
@@ -399,6 +406,7 @@ The video was \href{https://youtu.be/wk7dEKMPP68}{published on the \acro{FI~MU} 
 \label{fig:screening}
 \end{figure*}
 
+\bigskip
 \SetBibJustification{\raggedright \advance\itemsep by 2pt plus1pt minus1pt}
 \bibliographystyle{tugboat}
 \begingroup
